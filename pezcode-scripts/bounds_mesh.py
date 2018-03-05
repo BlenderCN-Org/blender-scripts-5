@@ -2,9 +2,9 @@ import bpy
 import mathutils
 
 class ObjectBoundsMesh(bpy.types.Operator):
-    bl_idname = "object.bounds_mesh"    # unique identifier
-    bl_label = "Mesh from bounding box" # display name
-    bl_options = {'REGISTER', 'UNDO'}   # enable undo for the operator
+    bl_idname = "object.bounds_mesh"
+    bl_label = "Mesh from bounding box"
+    bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod
     def poll(cls, context):
@@ -37,7 +37,7 @@ class ObjectBoundsMesh(bpy.types.Operator):
         for obj in objects:
             obj.select = True
 
-        return {'FINISHED'} # operator finished successfully
+        return {'FINISHED'}
 
     def min_max_from_bound(self, bound):
         min = mathutils.Vector([bound[0][0], bound[0][1], bound[0][2]])
