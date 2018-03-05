@@ -5,6 +5,8 @@ import operator
 
 # TODO:
 # - preview of changes
+# - warn about selected objects that are not editable
+#    - when are objects ever not editable?
 # - warn about non-selected objects that would get renamed
 
 class ObjectBatchRename(bpy.types.Operator):
@@ -44,18 +46,18 @@ class ObjectBatchRename(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.mode == 'OBJECT' and len(context.selected_objects) >= 2
+        return context.mode == 'OBJECT' and len(context.selected_editable_objects) >= 2
 
     def invoke(self, context, event):
         active = context.active_object
         if active is not None:
             self.name_template = active.name
         else:
-            self.name_template = context.selected_objects[0]
+            self.name_template = context.selected_editable_objects[0]
         return context.window_manager.invoke_props_dialog(self)
 
     def execute(self, context):
-        objects = self.sort(context.selected_objects)
+        objects = self.sort(context.selected_editable_objects)
         if self.reverse:
             objects.reverse()
         count = len(objects)
